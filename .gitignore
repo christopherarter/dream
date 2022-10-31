@@ -1,0 +1,8 @@
+.DS_Store
+/vendor
+.env
+.phpunit.result.cache
+/.fleet
+/.idea
+/.vscode
+/build
