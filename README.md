@@ -14,7 +14,9 @@ Currently, it only supports **AWS Comprehend**. However, more drivers and tools 
 - PHP 8.1
 - Laravel 9
 
-## Installation
+## Getting Started
+
+### Installation
 
 You can install the package via composer:
 
@@ -26,6 +28,17 @@ Next, publish the vendor config file:
 ```bash
 php artisan vendor:publish --provider="Dream\DreamServiceProvider"
 ```
+
+### Setup AWS Credentials
+
+Next, set up your AWS credentials in your `.env` file. **Note: the user must have access to the AWS Comprehend service.**
+
+```dotenv
+AWS_ACCESS_KEY_ID=your-access-key
+AWS_SECRET_ACCESS_KEY=your-secret-key
+```
+
+
 
 ---
 ## Usage
