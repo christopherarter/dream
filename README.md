@@ -27,6 +27,7 @@ Next, publish the vendor config file:
 php artisan vendor:publish --provider="Dream\DreamServiceProvider"
 ```
 
+---
 ## Usage
 
 To use this package, you can rely on the `Dream` facade. This facade will automatically use the default driver you have set in your `config/dream.php` file.
@@ -114,6 +115,29 @@ without sweating the small things.')
 Currently, Dream only supports [AWS Comprehend](https://aws.amazon.com/comprehend/). 
 However, more clients will be added very soon.
 
+#### IAM Configuration
+
+The AWS user you provide will need to have access to the Comprehend service.
+
+Here's a policy example:
+```json
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Action": [
+                "comprehend:*",
+            ],
+            "Effect": "Allow",
+            "Resource": "*"
+        }
+    ]
+}
+```
+
+If you'd like to strictly adhere to [least privilege](https://docs.aws.amazon.com/IAM/latest/UserGuide/best-practices.html#grant-least-privilege), you can limit the Actions in the role
+to just the ones you need. For example, if you only need to use the `entities` method, you can limit the Actions to just `comprehend:DetectEntities`.
+
 #### Environment Variables
 
 By default, Dream will use the `AWS_ACCESS_KEY_ID` and `AWS_SECRET_ACCESS_KEY` environment variables to authenticate with AWS Comprehend.
@@ -127,9 +151,8 @@ DREAM_AWS_ACCESS_KEY_ID=your-key
 DREAM_AWS_SECRET_ACCESS_KEY=your-secret
 ```
 
-
-- #### Azure Cognitive Services
-Coming soon.
+### Azure Cognitive Services
+Coming soon :)
 
 ---
 
