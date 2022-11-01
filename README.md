@@ -120,6 +120,21 @@ without sweating the small things.')
 //   "the small things",
 // ]
 ```
+
+### Language Detection
+Language detection is the process of identifying the language of a given text.
+Dream includes the ability to detect the language of a string.
+
+```php
+use Dream\Facades\Dream;
+
+Dream::language('¿Cuál es tu película favorita?'); // 'es'
+```
+
+The language code will be the [ISO 639-1](https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes) code for the language. The
+return type is a value backed enum `Dream\Enums\Language` to ensure consistency
+across clients.
+
 ---
 ## Clients
 
