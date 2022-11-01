@@ -3,6 +3,7 @@
 namespace Dream\Tests\Unit;
 
 use Dream\Collections\TextEntityCollection;
+use Dream\Enums\Language;
 use Dream\Enums\TextEntityType;
 use Dream\Facades\Dream;
 use Dream\KeyPhrase;
@@ -49,5 +50,14 @@ class DreamClientTest extends TestCase
         $entites = Dream::entities('I have an appointment with Lloyd Christmas and Harry Dunne on December 16th.');
 
         $this->assertTrue($entites->people()->count() === 2);
+    }
+
+    public function test_can_detect_language()
+    {
+        Dream::shouldReceive('language')
+            ->andReturn(Language::ENGLISH)
+            ->once();
+
+        $this->assertTrue(Dream::language('This is an English sentence.') === Language::ENGLISH);
     }
 }

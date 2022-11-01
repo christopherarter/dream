@@ -5,6 +5,7 @@ namespace Dream\Clients\Aws;
 use Aws\Comprehend\ComprehendClient;
 use Dream\Clients\Client;
 use Dream\Collections\TextEntityCollection;
+use Dream\Enums\Language;
 use Dream\Enums\TextEntityType;
 use Dream\KeyPhrase;
 use Dream\Sentiment;
@@ -64,5 +65,14 @@ class DreamAwsClient extends Client
             });
 
         return new TextEntityCollection($entities);
+    }
+
+    public function language(string $text): Language
+    {
+        $response = $this->comprehendClient->detectDominantLanguage([
+            'Text' => $text,
+        ]);
+        $language = Arr::get($response, 'Languages.0.LanguageCode');
+        return Language::from($language);
     }
 }

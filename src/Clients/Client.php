@@ -3,6 +3,7 @@
 namespace Dream\Clients;
 
 use Dream\Collections\TextEntityCollection;
+use Dream\Enums\Language;
 use Dream\Exceptions\DreamConnectionNotFound;
 use Dream\Exceptions\DreamDriverMethodNotDefinedException;
 use Dream\Exceptions\DreamDriverNotFound;
@@ -44,6 +45,16 @@ class Client
      * @throws DreamDriverMethodNotDefinedException
      */
     public function entities(string $text, string $language = null): TextEntityCollection
+    {
+        throw new DreamDriverMethodNotDefinedException();
+    }
+
+    /**
+     * @param string $text
+     * @return Language
+     * @throws DreamDriverMethodNotDefinedException
+     */
+    public function language(string $text): Language
     {
         throw new DreamDriverMethodNotDefinedException();
     }
