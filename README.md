@@ -141,7 +141,7 @@ Dream can detect the text inside of an image. To do this, we'll use the `imageTe
 use Dream\Facades\Dream;
 
 $file = Storage::get('image.jpg');
-Dream::imageLabels($file)->pluck('text')->toArray();
+Dream::imageText($file)->pluck('text')->toArray();
 // ["This was text in an image"]
 ```
 

@@ -2,6 +2,7 @@
 
 namespace Dream\Tests\Unit;
 
+use Dream\Collections\ImageTextCollection;
 use Dream\Collections\TextEntityCollection;
 use Dream\Enums\Language;
 use Dream\Enums\TextEntityType;
@@ -66,7 +67,7 @@ class DreamClientTest extends TestCase
     public function test_can_detect_image_text()
     {
         Dream::shouldReceive('imageText')
-            ->andReturn(collect([
+            ->andReturn(new ImageTextCollection([
                 new ImageText('Some text in an image', 0.99),
                 new ImageText('More text in an image.', 0.98),
             ]))
