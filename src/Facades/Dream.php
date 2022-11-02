@@ -10,6 +10,8 @@ use Illuminate\Support\Facades\Facade;
  * @method static Dream\Clients entities(string $string, $language = null): Dream\Collections\TextEntityCollection
  * @method static Dream\Clients connection(string $string): Dream\Clients\Client
  * @method static Dream\Clients language(string $string): Dream\Enums\Language
+ * @method static Dream\Clients imageLabels(string $string): \Illuminate\Support\Collection
+ * @method static Dream\Clients imageText(string $string): Dream\Collections\ImageTextCollection
  */
 class Dream extends Facade
 {

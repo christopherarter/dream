@@ -2,7 +2,8 @@
 
 namespace Dream\Enums;
 
-enum Language : string {
+enum Language: string
+{
     case AFRIKAANS = 'af';
     case AMHARIC = 'am';
     case ARABIC = 'ar';

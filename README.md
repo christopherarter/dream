@@ -135,6 +135,27 @@ The language code will be the [ISO 639-1](https://en.wikipedia.org/wiki/List_of_
 return type is a value backed enum `Dream\Enums\Language` to ensure consistency
 across clients.
 
+### Image Text Detection
+Dream can detect the text inside of an image. To do this, we'll use the `imageText()` method.
+```php
+use Dream\Facades\Dream;
+
+$file = Storage::get('image.jpg');
+Dream::imageLabels($file)->pluck('text')->toArray();
+// ["This was text in an image"]
+```
+
+### Image Label Detection
+Dream can determine labels for an image using the `imageLabels()` method.
+
+```php
+use Dream\Facades\Dream;
+
+$file = Storage::get('image.jpg');
+Dream::imageLabels($file)->pluck('name')->toArray();
+// ["man", "fish", "boat", "water", "ocean", "sea"];
+```
+
 ---
 ## Clients
 
@@ -165,6 +186,32 @@ Here's a policy example:
 
 If you'd like to strictly adhere to [least privilege](https://docs.aws.amazon.com/IAM/latest/UserGuide/best-practices.html#grant-least-privilege), you can limit the Actions in the role
 to just the ones you need. For example, if you only need to use the `entities` method, you can limit the Actions to just `comprehend:DetectEntities`.
+
+#### AWS Rekognition
+To use the image detection methods, you'll need to enable the [AWS Rekognition](https://aws.amazon.com/rekognition/) service for your user as well.
+You can add this to the example policy above:
+
+```json
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Action": [
+                "comprehend:*",
+            ],
+            "Effect": "Allow",
+            "Resource": "*"
+        },
+        {
+            "Effect": "Allow",
+            "Action": [
+                "rekognition:*"
+            ],
+            "Resource": "*"
+        }
+    ]
+}
+```
 
 #### Environment Variables
 
