@@ -6,6 +6,8 @@ use Dream\Collections\TextEntityCollection;
 use Dream\Enums\Language;
 use Dream\Enums\TextEntityType;
 use Dream\Facades\Dream;
+use Dream\ImageLabel;
+use Dream\ImageText;
 use Dream\KeyPhrase;
 use Dream\Sentiment;
 use Dream\Tests\TestCase;
@@ -59,5 +61,29 @@ class DreamClientTest extends TestCase
             ->once();
 
         $this->assertTrue(Dream::language('This is an English sentence.') === Language::ENGLISH);
+    }
+
+    public function test_can_detect_image_text()
+    {
+        Dream::shouldReceive('imageText')
+            ->andReturn(collect([
+                new ImageText('Some text in an image', 0.99),
+                new ImageText('More text in an image.', 0.98),
+            ]))
+            ->once();
+
+        $this->assertTrue(Dream::imageText('path/to/image.jpg')->count() === 2);
+    }
+
+    public function test_can_detect_lables()
+    {
+        Dream::shouldReceive('imageLabels')
+            ->andReturn(collect([
+                new ImageLabel('Pizza', 0.99),
+                new ImageLabel('Ninja Turtle', 0.98),
+            ]))
+            ->once();
+
+        $this->assertTrue(Dream::imageLabels('path/to/image.jpg')->count() === 2);
     }
 }

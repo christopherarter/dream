@@ -2,6 +2,7 @@
 
 namespace Dream\Clients;
 
+use Dream\Collections\ImageTextCollection;
 use Dream\Collections\TextEntityCollection;
 use Dream\Enums\Language;
 use Dream\Exceptions\DreamConnectionNotFound;
@@ -50,11 +51,38 @@ class Client
     }
 
     /**
-     * @param string $text
+     * @param  string  $text
      * @return Language
+     *
      * @throws DreamDriverMethodNotDefinedException
      */
     public function language(string $text): Language
+    {
+        throw new DreamDriverMethodNotDefinedException();
+    }
+
+    /**
+     * Gets the text from an image as a collection of ImageText objects.
+     *
+     * @param  string  $image
+     * @return ImageTextCollection
+     *
+     * @throws DreamDriverMethodNotDefinedException
+     */
+    public function imageText(string $image): ImageTextCollection
+    {
+        throw new DreamDriverMethodNotDefinedException();
+    }
+
+    /**
+     * Gets the labels from an image as a collection of ImageLabel objects.
+     *
+     * @param  string  $image
+     * @return Collection
+     *
+     * @throws DreamDriverMethodNotDefinedException
+     */
+    public function imageLabels(string $image): Collection
     {
         throw new DreamDriverMethodNotDefinedException();
     }

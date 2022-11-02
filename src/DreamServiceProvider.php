@@ -3,6 +3,7 @@
 namespace Dream;
 
 use Aws\Comprehend\ComprehendClient;
+use Aws\Rekognition\RekognitionClient;
 use Dream\Clients\Aws\DreamAwsClient;
 use Dream\Clients\Client as Dream;
 use Illuminate\Support\ServiceProvider;
@@ -21,6 +22,15 @@ class DreamServiceProvider extends ServiceProvider
             ->needs(ComprehendClient::class)
             ->give(function () {
                 return new ComprehendClient([
+                    'region' => config('dream.connections.aws.region'),
+                    'version' => 'latest',
+                ]);
+            });
+
+        $this->app->when(DreamAwsClient::class)
+            ->needs(RekognitionClient::class)
+            ->give(function () {
+                return new RekognitionClient([
                     'region' => config('dream.connections.aws.region'),
                     'version' => 'latest',
                 ]);

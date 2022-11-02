@@ -3,10 +3,14 @@
 namespace Dream\Clients\Aws;
 
 use Aws\Comprehend\ComprehendClient;
+use Aws\Rekognition\RekognitionClient;
 use Dream\Clients\Client;
+use Dream\Collections\ImageTextCollection;
 use Dream\Collections\TextEntityCollection;
 use Dream\Enums\Language;
 use Dream\Enums\TextEntityType;
+use Dream\ImageLabel;
+use Dream\ImageText;
 use Dream\KeyPhrase;
 use Dream\Sentiment;
 use Dream\TextEntity;
@@ -15,7 +19,7 @@ use Illuminate\Support\Collection;
 
 class DreamAwsClient extends Client
 {
-    public function __construct(protected ComprehendClient $comprehendClient)
+    public function __construct(protected ComprehendClient $comprehendClient, protected RekognitionClient $rekognitionClient)
     {
     }
 
@@ -73,6 +77,41 @@ class DreamAwsClient extends Client
             'Text' => $text,
         ]);
         $language = Arr::get($response, 'Languages.0.LanguageCode');
+
         return Language::from($language);
+    }
+
+    public function imageText(string $image): ImageTextCollection
+    {
+        $response = $this->rekognitionClient->detectText([
+            'Image' => [
+                'Bytes' => $image,
+            ],
+        ]);
+
+        return new ImageTextCollection(collect(Arr::get($response, 'TextDetections'))
+            ->map(function ($detection) {
+                return new ImageText(
+                    text: Arr::get($detection, 'DetectedText'),
+                    score: Arr::get($detection, 'Confidence'),
+                );
+            }));
+    }
+
+    public function imageLabels(string $image): Collection
+    {
+        $response = $this->rekognitionClient->detectLabels([
+            'Image' => [
+                'Bytes' => $image,
+            ],
+        ]);
+
+        return collect(Arr::get($response, 'Labels'))
+            ->map(function ($label) {
+                return new ImageLabel(
+                    name: Arr::get($label, 'Name'),
+                    score: Arr::get($label, 'Confidence'),
+                );
+            });
     }
 }
