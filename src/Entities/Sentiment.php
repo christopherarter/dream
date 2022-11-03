@@ -1,6 +1,6 @@
 <?php
 
-namespace Dream;
+namespace Dream\Entities;
 
 class Sentiment
 {

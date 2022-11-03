@@ -1,8 +1,8 @@
 <?php
 
-namespace Dream;
+namespace Dream\Entities;
 
-class ImageText
+class Text
 {
     public function __construct(
         public string $text,

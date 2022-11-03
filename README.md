@@ -57,7 +57,7 @@ Example:
 ```php
 use Dream\Facades\Dream;
 
-$sentiment = Dream::sentiment('I love Laravel!');
+$sentiment = Dream::text('I love Laravel!')->sentiment();
 $sentiment->disposition(); // 'positive';
 $sentiment->positive(); // true;
 ```
@@ -79,8 +79,9 @@ It's also known as named entity recognition (NER).
 ```php
 use Dream\Facades\Dream;
 
-$entities = Dream::entities('I need a reservation for Mr. Foo and Mr. Bar at 
-the Foo Bar Restaurant on October 31st.');
+$entities = Dream::text('I need a reservation for Mr. Foo and Mr. Bar at 
+the Foo Bar Restaurant on October 31st.')
+->entities();
 
 $entities->people()->toArray(); // ['Mr. Foo', 'Mr. Bar'];
 $entities->places()->toArray(); // ['Foo Bar Restaurant'];
@@ -106,9 +107,10 @@ Dream includes the ability to extract key phrases from a string.
 ```php
 use Dream\Facades\Dream;
 
-Dream::keyPhrases('Laravel is a web application framework with expressive, 
+Dream::text('Laravel is a web application framework with expressive, 
 elegant syntax. We’ve already laid the foundation — freeing you to create 
 without sweating the small things.')
+  ->phrases()
   ->pluck('text')
   ->toArray();
   
@@ -128,7 +130,7 @@ Dream includes the ability to detect the language of a string.
 ```php
 use Dream\Facades\Dream;
 
-Dream::language('¿Cuál es tu película favorita?'); // 'es'
+Dream::text('¿Cuál es tu película favorita?')->language(); // 'es'
 ```
 
 The language code will be the [ISO 639-1](https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes) code for the language. The
@@ -141,7 +143,11 @@ Dream can detect the text inside of an image. To do this, we'll use the `imageTe
 use Dream\Facades\Dream;
 
 $file = Storage::get('image.jpg');
-Dream::imageText($file)->pluck('text')->toArray();
+Dream::image($file)
+    ->text()
+    ->pluck('text')
+    ->toArray();
+    
 // ["This was text in an image"]
 ```
 
@@ -152,7 +158,11 @@ Dream can determine labels for an image using the `imageLabels()` method.
 use Dream\Facades\Dream;
 
 $file = Storage::get('image.jpg');
-Dream::imageLabels($file)->pluck('name')->toArray();
+Dream::image($file)
+    ->labels()
+    ->pluck('name')
+    ->toArray();
+    
 // ["man", "fish", "boat", "water", "ocean", "sea"];
 ```
 
@@ -234,10 +244,15 @@ Coming soon :)
 ### Building Custom Clients
 
 If you would like to build your own client, or contribute to this project by
-adding another client from a different provider, you can do so by extending the
-`Dream\Clients\Client` class.
+adding another client from a different provider, you can do so by extending
+the base classes:
 
-You should extend this class, and implement each method your client will support.
+- `Dream\Clients\Client` - The base client class
+- `Dream\Clients\TextClient` - The base text client class
+- `Dream\Clients\ImageClient` - The base image client class
+
+A client should have both image and text capabilities. These capabilities are handled 
+in their own respective client classes.
 
 ```php
 <?php
@@ -248,19 +263,14 @@ use Illuminate\Support\Collection
 
 class MyCustomClient extends Client
 {
-    public function sentiment(string $text, $language = 'en'): Sentiment
+    public function text(string $text): MyCustomTextClient
     {
-        // Your code here
+        return new MyCustomTextClient($text);
     }
-
-    public function entities(string $text, $language = 'en'): TextEntityCollection
+    
+    public function image(string $image): MyCustomImageClient
     {
-        // Your code here
-    }
-
-    public function keyPhrases(string $text,  $language = 'en'): Collection
-    {
-        // Your code here
+        return new MyCustomImageClient($image);
     }
 }
 ```
@@ -292,7 +302,7 @@ composer test
 ```
 
 ## Roadmap
-- [ ] Add OCR & Image Recognition
+- [x] Add OCR & Image Recognition
 - [ ] Add support for Azure Cognitive Services
 - [ ] Add support for Google Natural Language
 - [ ] Add support for OpenAI
