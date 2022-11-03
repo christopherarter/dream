@@ -3,9 +3,8 @@
 namespace Dream\Collections;
 
 use Dream\Enums\TextEntityType;
-use Illuminate\Support\Collection;
 
-class TextEntityCollection extends Collection
+class TextEntityCollection extends TextCollection
 {
     protected function filterByType(TextEntityType $type): self
     {

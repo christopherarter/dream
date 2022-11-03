@@ -2,12 +2,15 @@
 
 namespace Dream\Tests\Fixtures;
 
-use Dream\Sentiment;
-
 class TestClient extends \Dream\Clients\Client
 {
-    public function sentiment(string $text, string $language = null): Sentiment
+    public function image(string $image): TestImageClient
     {
-        return new Sentiment(0.9888, 0.0112, 0.001);
+        return app(TestImageClient::class, ['image' => $image]);
+    }
+
+    public function text(string $text): TestTextClient
+    {
+        return app(TestTextClient::class, ['text' => $text]);
     }
 }

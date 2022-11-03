@@ -3,7 +3,6 @@
 namespace Dream\Tests;
 
 use Dream\DreamServiceProvider;
-use Dream\Tests\Fixtures\TestClient;
 
 class TestCase extends \Orchestra\Testbench\TestCase
 {
@@ -13,7 +12,7 @@ class TestCase extends \Orchestra\Testbench\TestCase
 
     protected function defineEnvironment($app)
     {
-        $app['config']->set('dream.connections.aws.driver', TestClient::class);
+        $app['config']->set('dream.default', 'test');
     }
 
     protected function getPackageProviders($app): array

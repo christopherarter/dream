@@ -2,89 +2,32 @@
 
 namespace Dream\Clients;
 
-use Dream\Collections\ImageTextCollection;
-use Dream\Collections\TextEntityCollection;
-use Dream\Enums\Language;
 use Dream\Exceptions\DreamConnectionNotFound;
-use Dream\Exceptions\DreamDriverMethodNotDefinedException;
 use Dream\Exceptions\DreamDriverNotFound;
-use Dream\Sentiment;
 use Illuminate\Support\Arr;
-use Illuminate\Support\Collection;
 
 class Client
 {
     /**
-     * @param  string  $text
-     * @param  string|null  $language
-     * @return Sentiment
-     *
-     * @throws DreamDriverMethodNotDefinedException
-     */
-    public function sentiment(string $text, string $language = null): Sentiment
-    {
-        throw new DreamDriverMethodNotDefinedException();
-    }
-
-    /**
-     * @param  string  $text
-     * @param  string|null  $language
-     * @return Collection
-     *
-     * @throws DreamDriverMethodNotDefinedException
-     */
-    public function keyPhrases(string $text, string $language = null): Collection
-    {
-        throw new DreamDriverMethodNotDefinedException();
-    }
-
-    /**
-     * @param  string  $text
-     * @param  string|null  $language
-     * @return TextEntityCollection
-     *
-     * @throws DreamDriverMethodNotDefinedException
-     */
-    public function entities(string $text, string $language = null): TextEntityCollection
-    {
-        throw new DreamDriverMethodNotDefinedException();
-    }
-
-    /**
-     * @param  string  $text
-     * @return Language
-     *
-     * @throws DreamDriverMethodNotDefinedException
-     */
-    public function language(string $text): Language
-    {
-        throw new DreamDriverMethodNotDefinedException();
-    }
-
-    /**
-     * Gets the text from an image as a collection of ImageText objects.
+     * Returns an image client to do image related tasks.
      *
      * @param  string  $image
-     * @return ImageTextCollection
-     *
-     * @throws DreamDriverMethodNotDefinedException
+     * @return ImageClient
      */
-    public function imageText(string $image): ImageTextCollection
+    public function image(string $image): ImageClient
     {
-        throw new DreamDriverMethodNotDefinedException();
+        return new ImageClient($image);
     }
 
     /**
-     * Gets the labels from an image as a collection of ImageLabel objects.
+     * Returns a text client to do text related tasks.
      *
-     * @param  string  $image
-     * @return Collection
-     *
-     * @throws DreamDriverMethodNotDefinedException
+     * @param  string  $text
+     * @return TextClient
      */
-    public function imageLabels(string $image): Collection
+    public function text(string $text): TextClient
     {
-        throw new DreamDriverMethodNotDefinedException();
+        return new TextClient($text);
     }
 
     /**
