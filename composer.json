@@ -19,8 +19,9 @@
     ],
     "require": {
         "php": "^8.1",
+        "aws/aws-sdk-php": "^3.240",
         "illuminate/support": "^9.0",
-        "aws/aws-sdk-php": "^3.240"
+        "rubix/ml": "^2.2"
     },
     "require-dev": {
         "orchestra/testbench": "^7.1",
