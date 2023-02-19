@@ -3,6 +3,7 @@
 namespace Dream\Facades;
 
 use Illuminate\Support\Facades\Facade;
+use Illuminate\Support\Traits\Macroable;
 
 /**
  * @method static Dream\Clients\Client connection(string $string)
@@ -11,6 +12,8 @@ use Illuminate\Support\Facades\Facade;
  */
 class Dream extends Facade
 {
+    use Macroable;
+
     protected static function getFacadeAccessor(): string
     {
         return 'dream';
