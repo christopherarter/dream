@@ -1,13 +1,16 @@
 ![title](.github/images/dream-logo.png)
 
-# An AI/ML toolbox for Laravel
+# The AI/ML Toolbox for Laravel
 
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/christopherarter/dream.svg?style=flat-square)](https://packagist.org/packages/christopherarter/dream)
 [![Total Downloads](https://img.shields.io/packagist/dt/christopherarter/dream.svg?style=flat-square)](https://packagist.org/packages/christopherarter/dream)
 ![GitHub Actions](https://github.com/christopherarter/dream/actions/workflows/main.yml/badge.svg)
 
 Dream is a package for Laravel that brings common AI/ML tools into your Laravel application without all the boilerplate.
-Currently, it only supports **AWS Comprehend**. However, more drivers and tools will be added.
+
+It currently supports:
+- **OpenAI**
+- **AWS Comprehend**
 
 ## Requirements
 
@@ -29,9 +32,14 @@ Next, publish the vendor config file:
 php artisan vendor:publish --provider="Dream\DreamServiceProvider"
 ```
 
-### Setup AWS Credentials
+### Authentication
 
-Next, set up your AWS credentials in your `.env` file. **Note: the user must have access to the AWS Comprehend service.**
+#### OpenAI
+```dotenv
+DREAM_OPENAI_API_KEY=your-api-key
+```
+#### AWS
+To use AWS Comprehend, you can add your AWS credentials in your `.env` file. **Note: the user must have access to the AWS Comprehend service.**
 
 ```dotenv
 AWS_ACCESS_KEY_ID=your-access-key
@@ -150,6 +158,7 @@ Dream::image($file)
     
 // ["This was text in an image"]
 ```
+*Note: Currently only available using AWS*
 
 ### Image Label Detection
 Dream can determine labels for an image using the `imageLabels()` method.
@@ -166,13 +175,12 @@ Dream::image($file)
 // ["man", "fish", "boat", "water", "ocean", "sea"];
 ```
 
+*Note: Currently only available using AWS*
+
 ---
 ## Clients
 
 ### AWS Comprehend
-
-Currently, Dream only supports [AWS Comprehend](https://aws.amazon.com/comprehend/). 
-However, more clients will be added very soon.
 
 #### IAM Configuration
 
@@ -303,9 +311,9 @@ composer test
 
 ## Roadmap
 - [x] Add OCR & Image Recognition
-- [ ] Add support for Azure Cognitive Services
+- [x] Add support for OpenAI
 - [ ] Add support for Google Natural Language
-- [ ] Add support for OpenAI
+- [ ] Add support for custom local models using [Rubix ML](https://github.com/RubixML/ML)
 
 ## Contributing
 
@@ -317,7 +325,7 @@ If you discover any security related issues, please email chris@arter.dev instea
 
 ## Credits
 
-- [Chris Arter](https://github.com/christopherarter)
+- Maintained by [Chris Arter](https://github.com/christopherarter)
 - [All Contributors](../../contributors)
 
 ## License
