@@ -7,7 +7,7 @@
 ![GitHub Actions](https://github.com/christopherarter/dream/actions/workflows/main.yml/badge.svg)
 
 Dream is a package for Laravel that brings common AI/ML tools into your Laravel application without all the boilerplate.
-Currently, it only supports **AWS Comprehend**. However, more drivers and tools will be added.
+Currently, it only supports **AWS Comprehend** (with experimental sentiment analysis using Rubix ML). However, more drivers and tools will be added.
 
 ## Requirements
 
@@ -235,6 +235,10 @@ For example,
 DREAM_AWS_ACCESS_KEY_ID=your-key
 DREAM_AWS_SECRET_ACCESS_KEY=your-secret
 ```
+
+### Rubix ML
+[Rubix ML](https://rubixml.com/) is MIT-licensed ML library in PHP.
+One of its case studies is a [Sentiment analysis engine trained on IMDb](https://github.com/RubixML/Sentiment), included here (you can train your own model, one is included in tests/Rubix). The model is not necessarily very good, but it can be used without incurring any cloud computing fees.
 
 ### Azure Cognitive Services
 Coming soon :)

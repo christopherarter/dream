@@ -13,6 +13,12 @@ return [
             'secret' => env('DREAM_AWS_SECRET_ACCESS_KEY') ?? env('AWS_SECRET_ACCESS_KEY'),
             'region' => env('DREAM_AWS_DEFAULT_REGION') ?? env('AWS_DEFAULT_REGION'),
         ],
+        'rubix' => [
+            'driver' => Dream\Clients\Rubix\RubixClient::class,
+            'models' => [
+                'sentiment' => 'sentiment.rbx'
+            ],
+        ],
         'test' => [
             'driver' => \Dream\Tests\Fixtures\TestClient::class,
         ],
