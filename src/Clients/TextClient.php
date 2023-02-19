@@ -61,4 +61,17 @@ class TextClient
     {
         throw new DreamDriverMethodNotDefinedException();
     }
+
+    /**
+     * @param  int  $maxTokens
+     * @param  float  $temperature
+     * @param  string  $model
+     * @return string
+     *
+     * @throws DreamDriverMethodNotDefinedException
+     */
+    public function prompt(int $maxTokens = 20, float $temperature = 0.5, string $model = ''): string
+    {
+        throw new DreamDriverMethodNotDefinedException();
+    }
 }
